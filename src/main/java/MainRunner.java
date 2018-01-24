@@ -17,7 +17,7 @@ public class MainRunner extends TimerTask {
     public void init() {
         pool = new ForkJoinPool();
         Timer timer = new Timer("MyTimer", false);
-        timer.schedule(this, 10);
+        timer.schedule(this,0, 10);
     }
 
     public void run() {
@@ -29,14 +29,14 @@ public class MainRunner extends TimerTask {
         System.out.println("Scheduled run number " + counter + ", start running all jobs");
         pool.invoke(new ParallelMainTask(tasks));
         System.out.println("Finished run number " + counter);
-
+        counter++;
     }
 
     private Runnable buildTask(int i) {
        return () -> {
            System.out.println("Started job " + i + " in thread " + Thread.currentThread().getName());
            try {
-               Thread.sleep(2000);
+               Thread.sleep(100);
            } catch (InterruptedException e) {
                e.printStackTrace();
            }
